@@ -1,0 +1,52 @@
+{% extends "admin/base.html" %} {% block content %}
+
+<main>
+  <div class="container-fluid px-4">
+    <h1 class="mt-4">Manage Vocabulary</h1>
+    <ol class="breadcrumb mb-4">
+      <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+      <li class="breadcrumb-item active">Vocabulary</li>
+    </ol>
+    <div class="mt-5">
+      <div class="row">
+        <div class="col-md-6 col-12 mx-auto">
+          <h3>Create a vocabulary</h3>
+          <hr />
+          <form method="post" action="{{ url_for('vocabulary.create') }}">
+            <div class="row">
+              <div class="mb-3 col-md-6 col-12">
+                <label class="form-label">Word</label>
+                <input type="text" name="word" class="form-control" required />
+              </div>
+
+              <div class="mb-3 col-md-6 col-12">
+                <label class="form-label">Meaning</label>
+                <input type="text" name="meaning" class="form-control" required />
+              </div>
+
+              <div class="mb-3 col-md-6 col-12">
+                <label class="form-label">Phonetic</label>
+                <input type="text" name="phonetic" class="form-control" />
+              </div>
+
+              <div class="mb-3 col-md-6 col-12">
+                <label class="form-label">Word Type</label>
+                <select name="word_type" class="form-select">
+                  <option value="NOUN">NOUN</option>
+                  <option value="VERB">VERB</option>
+                  <option value="ADJECTIVE">ADJECTIVE</option>
+                </select>
+              </div>
+
+              <div class="col-12 mb-5">
+                <button type="submit" class="btn btn-primary">Create</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "admin/base.html" %} {% block content %}
+
+<main>
+  <div class="container-fluid px-4">
+    <h1 class="mt-4">Delete Vocabulary</h1>
+    <ol class="breadcrumb mb-4">
+      <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+      <li class="breadcrumb-item active">Vocabulary</li>
+    </ol>
+    <div class="container mt-5">
+      <div class="row">
+        <div class="mx-auto">
+          <h3>Delete vocabulary with id = {{ id }}</h3>
+        </div>
+        <hr />
+        <div class="alert alert-danger">
+          Are you sure to delete with Vocabulary <br>
+          <strong>ID:</strong>
+          {{ vocab.id }}
+          <br />
+          <strong>Word:</strong>
+          {{ vocab.word }}
+          <br />
+          <strong>Meaning:</strong>
+          {{ vocab.meaning }}
+        </div>
+        <form method="post" action="{{ url_for('vocabulary.deleteVocabulary', id=id, vocab=vocab) }}">
+          <input type="hidden" name="id" value="{{ id }}" />
+          <button type="submit" class="btn btn-danger">Confirm</button>
+          <a href="{{ url_for('vocabulary.getVocabularyPage') }}" class="btn btn-secondary">Cancel</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% endblock %}

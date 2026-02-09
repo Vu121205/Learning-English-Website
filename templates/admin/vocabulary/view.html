@@ -23,22 +23,25 @@
               <th>Meaning</th>
               <th>Phonetic</th>
               <th>word_type</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            <c:forEach var="user" items="${users1}">
+            {% for vocab in vocabulary_list %}
               <tr>
-                <th></th>
-                <td></td>              
-                <td></td>
-                <td></td>
-                <td></td>
+                <th>{{ vocab.id }}</th>
+                <td>{{ vocab.word }}
+                  <button type="button" class="btn btn-outline-primary btn-sm ms-2"  onclick="speak('{{ vocab.word }}')"><i class="fa-solid fa-volume-high"></i></button>
+                </td>              
+                <td>{{ vocab.meaning }}</td>
+                <td>{{ vocab.phonetic }}</td>
+                <td>{{ vocab.word_type }}</td>
                 <td>
-                  <a href="/admin/user/update/${user.id}" type="button" class="btn btn-warning">Update</a>
-                  <a href="/admin/user/delete/${user.id}" type="button" class="btn btn-danger">Delete</a>
+                  <a href="/admin/vocabulary/update/{{ vocab.id }}" type="button" class="btn btn-warning">Update</a>
+                  <a href="/admin/vocabulary/delete/{{ vocab.id }}" type="button" class="btn btn-danger">Delete</a>
                 </td>
               </tr>
-            </c:forEach>
+           {% endfor %}
           </tbody>
         </table>
       </div>

@@ -1,11 +1,11 @@
 from flask import Flask
-from controllers.HomePageController import home_page_bp
-from controllers.VocabularyController import vocabulary_bp
+from controllers.admin.DashBoardController import dashBoard_bp
+from controllers.admin.VocabularyController import vocabulary_bp
 from models import db
 
 
 app = Flask(__name__)
-app.register_blueprint(home_page_bp)
+app.register_blueprint(dashBoard_bp)
 app.register_blueprint(vocabulary_bp)
 # config db
 app.config['SQLALCHEMY_DATABASE_URI'] = \

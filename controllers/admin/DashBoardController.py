@@ -1,7 +1,7 @@
 from flask import Blueprint, Flask, app, render_template
 
-home_page_bp = Blueprint('home_page', __name__)
+dashBoard_bp = Blueprint('dashboard', __name__)
 
-@home_page_bp.route('/admin')
-def home_page():
+@dashBoard_bp.route('/admin')
+def home():
     return render_template('admin/dashboard.html')

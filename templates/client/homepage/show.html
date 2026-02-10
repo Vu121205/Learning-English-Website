@@ -1,364 +1,107 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<title>Lingua</title>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="description" content="Lingua project">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
-<link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="static/client/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-<link rel="stylesheet" type="text/css" href="static/client/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-<link rel="stylesheet" type="text/css" href="static/client/plugins/OwlCarousel2-2.2.1/animate.css">
-<link rel="stylesheet" type="text/css" href="static/client/styles/main_styles.css">
-<link rel="stylesheet" type="text/css" href="static/client/styles/responsive.css">
-</head>
-<body>
+  <head>
+    <title>Lingua</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="Lingua project" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='client/styles/bootstrap4/bootstrap.min.css') }}" />
+    <link href="{{ url_for('static', filename='client/plugins/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='client/plugins/OwlCarousel2-2.2.1/owl.carousel.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='client/plugins/OwlCarousel2-2.2.1/owl.theme.default.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='client/plugins/OwlCarousel2-2.2.1/animate.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='client/styles/main_styles.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='client/styles/responsive.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='client/css/styles.css') }}" />
+  </head>
+  <body>
+    <div class="super_container">
+      <!-- header -->
+      {% include "client/layout/header.html" %}
 
-<div class="super_container">
+      <!-- Home -->
 
-	<!-- Header -->
+      <div>
+        <div class="row">
+          <div class="col text-center">
+            <div class="home">
+              <div class="home_background" style="background-image: linear-gradient(135deg, #667eea, #764ba2)"></div>
 
-	<header class="header">
+              <div class="home_content">
+                <div class="container">
+                  <div class="row justify-content-center">
+                    <div class="col-lg-8 text-center">
+                      <h1 class="home_title text-white">English Dictionary</h1>
 
-		<!-- Header Content -->
-		<div class="header_container">
-			<div class="container">
-				<div class="row">
-					<div class="col">
-						<div class="header_content d-flex flex-row align-items-center justify-content-start">
-							<div class="logo_container mr-auto">
-								<a href="#">
-									<div class="logo_text">Lingua</div>
-								</a>
-							</div>
-							<nav class="main_nav_contaner">
-								<ul class="main_nav">
-									<li class="active"><a href="index.html">Home</a></li>
-									<li><a href="courses.html">Courses</a></li>
-									<li><a href="instructors.html">Instructors</a></li>
-									<li><a href="#">Events</a></li>
-									<li><a href="blog.html">Blog</a></li>
-									<li><a href="contact.html">Contact</a></li>
-								</ul>
-							</nav>
-							<div class="header_content_right ml-auto text-right">
-								<div class="header_search">
-									<div class="search_form_container">
-										<form action="#" id="search_form" class="search_form trans_400">
-											<input type="search" class="header_search_input trans_400" placeholder="Type for Search" required="required">
-											<div class="search_button">
-												<i class="fa fa-search" aria-hidden="true"></i>
-											</div>
-										</form>
-									</div>
-								</div>
+                      <!-- SEARCH BOX -->
+                      <div class="search-box shadow-lg p-4 rounded bg-white mt-4">
+                        <div class="input-group mb-3">
+                          <input type="text" id="searchWord" class="form-control form-control-lg" placeholder="Nhập từ tiếng Anh..." />
+                          <button class="btn btn-primary btn-lg" onclick="searchWord()">Tra cứu</button>
+                        </div>
 
-								<!-- Hamburger -->
+                        <!-- RESULT -->
+                        <div id="result" class="text-start d-none">
+                          <h4>
+                            <span id="resultWord"></span>
+                            <button class="btn btn-outline-primary btn-sm ml-2" onclick="speakResult()">
+                              <i class="fa-solid fa-volume-high"></i>
+                            </button>
+                          </h4>
 
-								<div class="user"><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></div>
-								<div class="hamburger menu_mm">
-									<i class="fa fa-bars menu_mm" aria-hidden="true"></i>
-								</div>
-							</div>
+                          <p class="text-muted" id="resultPhonetic"></p>
+                          <p id="resultMeaning"></p>
+                        </div>
+                      </div>
+                      <!-- END SEARCH BOX -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+      {% include "client/layout/language.html" %} {% include "client/layout/instructor.html" %} {% include "client/layout/footer.html" %}
+    </div>
 
-	</header>
+    <script src="{{ url_for('static', filename='client/js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='client/styles/bootstrap4/popper.js') }}"></script>
+    <script src="{{ url_for('static', filename='client/styles/bootstrap4/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='client/plugins/OwlCarousel2-2.2.1/owl.carousel.js') }}"></script>
+    <script src="{{ url_for('static', filename='client/plugins/easing/easing.js') }}"></script>
+    <script src="{{ url_for('static', filename='client/js/custom.js') }}"></script>
+    <script>
+      let currentWord = '';
 
-	
-	<!-- Home -->
+      function searchWord() {
+        const word = document.getElementById('searchWord').value.trim();
+        if (!word) return;
 
-	<div class="home">
-		<div class="home_background" style="background-image: url(images/index_background.jpg);"></div>
-		<div class="home_content">
-			<div class="container">
-				<div class="row">
-					<div class="col text-center">
-						<h1 class="home_title">Learn Languages Easily</h1>
-						<div class="home_button trans_200"><a href="#">get started</a></div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+        fetch(`/api/dictionary?word=${word}`)
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.error) {
+              alert('Không tìm thấy từ!');
+              return;
+            }
 
-	<!-- Language -->
+            currentWord = data.word;
+            document.getElementById('result').classList.remove('d-none');
+            document.getElementById('resultWord').innerText = data.word;
+            document.getElementById('resultPhonetic').innerText = data.phonetic;
+            document.getElementById('resultMeaning').innerText = data.meaning;
+          });
+      }
 
-	<div class="language">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="language_slider_container">
-						
-						<!-- Language Slider -->
-
-						<div class="owl-carousel owl-theme language_slider">
-
-							<!-- Flag -->
-							<div class="owl-item language_item">
-								<a href="#">
-									<div class="flag"><img src="images/Ukrainian.svg" alt=""></div>
-									<div class="lang_name">Ukrainian</div>
-								</a>
-							</div>
-
-							<!-- Flag -->
-							<div class="owl-item language_item">
-								<a href="#">
-									<div class="flag"><img src="images/Japanese.svg" alt=""></div>
-									<div class="lang_name">Japanese</div>
-								</a>
-							</div>
-
-							<!-- Flag -->
-							<div class="owl-item language_item">
-								<a href="#">
-									<div class="flag"><img src="images/Lithuanian.svg" alt=""></div>
-									<div class="lang_name">Lithuanian</div>
-								</a>
-							</div>
-
-							<!-- Flag -->
-							<div class="owl-item language_item">
-								<a href="#">
-									<div class="flag"><img src="images/Swedish.svg" alt=""></div>
-									<div class="lang_name">Swedish</div>
-								</a>
-							</div>
-
-							<!-- Flag -->
-							<div class="owl-item language_item">
-								<a href="#">
-									<div class="flag"><img src="images/English.svg" alt=""></div>
-									<div class="lang_name">English</div>
-								</a>
-							</div>
-
-							<!-- Flag -->
-							<div class="owl-item language_item">
-								<a href="#">
-									<div class="flag"><img src="images/Italian.svg" alt=""></div>
-									<div class="lang_name">Italian</div>
-								</a>
-							</div>
-
-							<!-- Flag -->
-							<div class="owl-item language_item">
-								<a href="#">
-									<div class="flag"><img src="images/Chinese.svg" alt=""></div>
-									<div class="lang_name">Chinese</div>
-								</a>
-							</div>
-
-							<!-- Flag -->
-							<div class="owl-item language_item">
-								<a href="#">
-									<div class="flag"><img src="images/French.svg" alt=""></div>
-									<div class="lang_name">French</div>
-								</a>
-							</div>
-
-							<!-- Flag -->
-							<div class="owl-item language_item">
-								<a href="#">
-									<div class="flag"><img src="images/German.svg" alt=""></div>
-									<div class="lang_name">German</div>
-								</a>
-							</div>
-
-						</div>
-
-						<div class="lang_nav lang_prev"><i class="fa fa-angle-left" aria-hidden="true"></i></div>
-						<div class="lang_nav lang_next"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-	<!-- Instructors -->
-
-	<div class="instructors">
-		<div class="instructors_background" style="background-image:url(images/instructors_background.png)"></div>
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<h2 class="section_title text-center">The Best Tutors in Town</h2>
-				</div>
-			</div>
-			<div class="row instructors_row">
-
-				<!-- Instructor -->
-				<div class="col-lg-4 instructor_col">
-					<div class="instructor text-center">
-						<div class="instructor_image_container">
-							<div class="instructor_image"><img src="images/instructor_1.jpg" alt=""></div>
-						</div>
-						<div class="instructor_name"><a href="instructors.html">Sarah Parker</a></div>
-						<div class="instructor_title">Teacher</div>
-						<div class="instructor_text">
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce enim nulla, mollis eu metus in, sagittis fringilla tortor.</p>
-						</div>
-						<div class="instructor_social">
-							<ul>
-								<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-
-				<!-- Instructor -->
-				<div class="col-lg-4 instructor_col">
-					<div class="instructor text-center">
-						<div class="instructor_image_container">
-							<div class="instructor_image"><img src="images/instructor_2.jpg" alt=""></div>
-						</div>
-						<div class="instructor_name"><a href="instructors.html">Sarah Parker</a></div>
-						<div class="instructor_title">Teacher</div>
-						<div class="instructor_text">
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce enim nulla, mollis eu metus in, sagittis fringilla tortor.</p>
-						</div>
-						<div class="instructor_social">
-							<ul>
-								<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-
-				<!-- Instructor -->
-				<div class="col-lg-4 instructor_col">
-					<div class="instructor text-center">
-						<div class="instructor_image_container">
-							<div class="instructor_image"><img src="images/instructor_3.jpg" alt=""></div>
-						</div>
-						<div class="instructor_name"><a href="instructors.html">Sarah Parker</a></div>
-						<div class="instructor_title">Teacher</div>
-						<div class="instructor_text">
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce enim nulla, mollis eu metus in, sagittis fringilla tortor.</p>
-						</div>
-						<div class="instructor_social">
-							<ul>
-								<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</div>
-
-
-	<!-- Footer -->
-
-	<footer class="footer">
-		<div class="footer_body">
-			<div class="container">
-				<div class="row">
-
-					<!-- Newsletter -->
-					<div class="col-lg-3 footer_col">
-						<div class="newsletter_container d-flex flex-column align-items-start justify-content-end">
-							<div class="footer_logo mb-auto"><a href="#">Lingua</a></div>
-							<div class="footer_title">Subscribe</div>
-							<form action="#" id="newsletter_form" class="newsletter_form">
-								<input type="email" class="newsletter_input" placeholder="Email" required="required">
-								<button class="newsletter_button"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></button>
-							</form>
-						</div>
-					</div>
-
-					<!-- About -->
-					<div class="col-lg-2 offset-lg-3 footer_col">
-						<div>
-							<div class="footer_title">About Us</div>
-							<ul class="footer_list">
-								<li><a href="#">Courses</a></li>
-								<li><a href="#">Team</a></li>
-								<li><a href="#">Brand Guidelines</a></li>
-								<li><a href="#">Jobs</a></li>
-								<li><a href="#">Advertise with us</a></li>
-								<li><a href="#">Press</a></li>
-								<li><a href="#">Contact us</a></li>
-							</ul>
-						</div>
-					</div>
-
-					<!-- Help & Support -->
-					<div class="col-lg-2 footer_col">
-						<div class="footer_title">Help & Support</div>
-						<ul class="footer_list">
-							<li><a href="#">Discussions</a></li>
-							<li><a href="#">Troubleshooting</a></li>
-							<li><a href="#">Duolingo FAQs</a></li>
-							<li><a href="#">Schools FAQs</a></li>
-							<li><a href="#">Duolingo English Test FAQs</a></li>
-							<li><a href="#">Status</a></li>
-						</ul>
-					</div>
-
-					<!-- Privacy -->
-					<div class="col-lg-2 footer_col clearfix">
-						<div>
-							<div class="footer_title">Privacy & Terms</div>
-							<ul class="footer_list">
-								<li><a href="#">Community Guidelines</a></li>
-								<li><a href="#">Terms</a></li>
-								<li><a href="#">Brand Guidelines</a></li>
-								<li><a href="#">Privacy</a></li>
-							</ul>
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</div>
-		<div class="copyright">
-			<div class="container">
-				<div class="row">
-					<div class="col">
-						<div class="copyright_content d-flex flex-md-row flex-column align-items-md-center align-items-start justify-content-start">
-							<div class="cr"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a> &amp; distributed by <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></div>
-							<div class="cr_right ml-md-auto">
-								<div class="footer_phone"><span class="cr_title">phone:</span>+44 300 303 0266</div>
-								<div class="footer_social">
-									<span class="cr_social_title">follow us</span>
-									<ul>
-										<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-										<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-										<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
-</div>
-
-<script src="static/client/js/jquery-3.2.1.min.js"></script>
-<script src="static/client/styles/bootstrap4/popper.js"></script>
-<script src="static/client/styles/bootstrap4/bootstrap.min.js"></script>
-<script src="static/client/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-<script src="static/client/plugins/easing/easing.js"></script>
-<script src="static/client/js/custom.js"></script>
-</body>
+      function speakResult() {
+        const utterance = new SpeechSynthesisUtterance(currentWord);
+        utterance.lang = 'en-US';
+        speechSynthesis.cancel();
+        speechSynthesis.speak(utterance);
+      }
+    </script>
+  </body>
 </html>

@@ -1,12 +1,14 @@
 from flask import Flask
 from controllers.admin.DashBoardController import dashBoard_bp
 from controllers.admin.VocabularyController import vocabulary_bp
+from controllers.client.HomePageController import homePage_bp
 from models import db
 
 
 app = Flask(__name__)
 app.register_blueprint(dashBoard_bp)
 app.register_blueprint(vocabulary_bp)
+app.register_blueprint(homePage_bp)
 # config db
 app.config['SQLALCHEMY_DATABASE_URI'] = \
     'mysql+pymysql://root:123456@localhost:3306/learn_english_website'

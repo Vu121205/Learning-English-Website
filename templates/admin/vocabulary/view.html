@@ -19,23 +19,19 @@
           <thead>
             <tr>
               <th>ID</th>
-              <th>Word</th>
-              <th>Meaning</th>
-              <th>Phonetic</th>
-              <th>word_type</th>
+              <th>Name</th>
+              <th>Name_EN</th>
+              <th>Image</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {% for vocab in vocabulary_list %}
+            {% for topic in topic %}
               <tr>
                 <th>{{ vocab.id }}</th>
-                <td>{{ vocab.word }}
-                  <button type="button" class="btn btn-outline-primary btn-sm ms-2"  onclick="speak('{{ vocab.word }}')"><i class="fa-solid fa-volume-high"></i></button>
-                </td>              
-                <td>{{ vocab.meaning }}</td>
-                <td>{{ vocab.phonetic }}</td>
-                <td>{{ vocab.word_type }}</td>
+                <td>{{ vocab.name }}</td>
+                <td>{{ vocab.name_en }}</td>
+                <td>{{ vocab.image }}</td>         
                 <td>
                   <a href="/admin/vocabulary/update/{{ vocab.id }}" type="button" class="btn btn-warning">Update</a>
                   <a href="/admin/vocabulary/delete/{{ vocab.id }}" type="button" class="btn btn-danger">Delete</a>

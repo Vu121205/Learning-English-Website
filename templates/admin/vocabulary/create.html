@@ -12,7 +12,7 @@
         <div class="col-md-6 col-12 mx-auto">
           <h3>Create a vocabulary</h3>
           <hr />
-          <form method="post" action="{{ url_for('vocabulary.create') }}">
+          <form method="post" action="{{ url_for('vocabulary.createVocabulary') }}">
             <div class="row">
               <div class="mb-3 col-md-6 col-12">
                 <label class="form-label">Word</label>
@@ -35,6 +35,14 @@
                   <option value="NOUN">NOUN</option>
                   <option value="VERB">VERB</option>
                   <option value="ADJECTIVE">ADJECTIVE</option>
+                </select>
+              </div>
+              <div class="mb-3 col-md-6 col-12">
+                <label class="form-label">Topic</label>
+                <select name="topic_id" class="form-select">
+                  {% for topic in topics %}
+                  <option value="{{ topic.id }}">{{ topic.name }}</option>
+                  {% endfor %}
                 </select>
               </div>
 

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Lingua</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="Lingua project" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='client/styles/bootstrap4/bootstrap.min.css') }}" />
+    <link href="{{ url_for('static', filename='client/plugins/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='client/plugins/OwlCarousel2-2.2.1/owl.carousel.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='client/plugins/OwlCarousel2-2.2.1/owl.theme.default.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='client/plugins/OwlCarousel2-2.2.1/animate.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='client/styles/main_styles.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='client/styles/responsive.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='client/css/styles.css') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+  </head>
+  <body>
+    <div class="super_container">
+      <!-- header -->
+      {% include "client/layout/header.html" %}
+
+      <main class="mt-5 pt-5">
+        <div class="container py-5 mt-5">
+          <h2 class="mb-1">{{ topic.name }}</h2>
+          <p class="text-muted mb-4">{{ topic.name_en }}</p>
+
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th>#</th>
+                  <th>Word</th>
+                  <th>Type</th>
+                  <th>Phonetic</th>
+                  <th>Meaning</th>
+                  <th>Audio</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {% for vocab in vocabularies %}
+                <tr>
+                  <td>{{ loop.index }}</td>
+
+                  <td class="fw-bold">{{ vocab.word }}</td>
+
+                  <td>
+                    <span class="badge text-bg-success">{{ vocab.word_type }}</span>
+                  </td>
+
+                  <td class="text-muted">{% if vocab.phonetic %} /{{ vocab.phonetic }}/ {% else %} N/A {% endif %}</td>
+
+                  <td>{{ vocab.meaning }}</td>
+
+                  <td>
+                    <!-- Dùng Web Speech API để phát âm -->
+                    <button class="btn btn-sm btn-outline-primary" onclick="speak('{{ vocab.word }}')"><i class="fa-solid fa-volume-high"></i></button>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+
+      {% include "client/layout/footer.html" %}
+    </div>
+  </body>
+  <script>
+    function speak(text) {
+      if (!('speechSynthesis' in window)) {
+        alert('Trình duyệt không hỗ trợ phát âm');
+        return;
+      }
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-US'; // Anh - Mỹ
+      speechSynthesis.speak(utterance);
+    }
+  </script>
+</html>

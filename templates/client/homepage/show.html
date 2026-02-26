@@ -14,55 +14,82 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='client/styles/main_styles.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='client/styles/responsive.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='client/css/styles.css') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
   </head>
   <body>
-    <div class="super_container">
-      <!-- header -->
+    <div class="super_container mt-5 pt-5">
       {% include "client/layout/header.html" %}
 
-      <!-- Home -->
+      <!-- Search Section -->
+      <section class="py-5 bg-light">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <form method="GET" action="/">
+          <div class="input-group input-group-lg shadow-sm">
 
-      <div>
-        <div class="row">
-          <div class="col text-center">
-            <div class="home">
-              <div class="home_background" style="background-image: linear-gradient(135deg, #667eea, #764ba2)"></div>
+            <input 
+              type="text"  
+              class="form-control" 
+              name="q"
+              placeholder="Nhập từ cần tra..."
+              value="{{ keyword or '' }}"
+            />
 
-              <div class="home_content">
-                <div class="container">
-                  <div class="row justify-content-center">
-                    <div class="col-lg-8 text-center">
-                      <h1 class="home_title text-white">English Dictionary</h1>
+            <select 
+              class="form-select" 
+              name="type" 
+              style="max-width: 170px">
 
-                      <!-- SEARCH BOX -->
-                      <div class="search-box shadow-lg p-4 rounded bg-white mt-4">
-                        <div class="input-group mb-3">
-                          <input type="text" id="searchWord" class="form-control form-control-lg" placeholder="Nhập từ tiếng Anh..." />
-                          <button class="btn btn-primary btn-lg" onclick="searchWord()">Tra cứu</button>
-                        </div>
+              <option value="en_vi"
+                {% if request.args.get('type') == 'en_vi' %}selected{% endif %}>
+                Anh - Việt
+              </option>
 
-                        <!-- RESULT -->
-                        <div id="result" class="text-start d-none">
-                          <h4>
-                            <span id="resultWord"></span>
-                            <button class="btn btn-outline-primary btn-sm ml-2" onclick="speakResult()">
-                              <i class="fa-solid fa-volume-high"></i>
-                            </button>
-                          </h4>
+              <option value="vi_en"
+                {% if request.args.get('type') == 'vi_en' %}selected{% endif %}>
+                Việt - Anh
+              </option>
 
-                          <p class="text-muted" id="resultPhonetic"></p>
-                          <p id="resultMeaning"></p>
-                        </div>
-                      </div>
-                      <!-- END SEARCH BOX -->
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            </select>
+
+            <button class="btn btn-primary px-4" type="submit">
+              Tra từ
+            </button>
+
           </div>
-        </div>
+        </form>
       </div>
+    </div>
+  </div>
+
+  {% if keyword %}
+  <div class="container mt-4">
+    <h4>Kết quả cho "{{ keyword }}"</h4>
+
+    {% if results %}
+      {% for vocab in results %}
+      <div class="card p-3 mb-2">
+        <h5>
+          {{ vocab.word }} 
+          {% if vocab.word_type %}
+            ({{ vocab.word_type }})<i class="fa-solid fa-volume-high p-2" onclick="speak('{{ vocab.word }}')"></i>
+          {% endif %}
+        </h5>
+
+        {% if vocab.phonetic %}
+          <p><i>{{ vocab.phonetic }}</i></p>
+        {% endif %}
+
+        <p>{{ vocab.meaning }}</p>
+      </div>
+      {% endfor %}
+    {% else %}
+      <p>Không tìm thấy kết quả.</p>
+    {% endif %}
+  </div>
+  {% endif %}
+      </section>
 
       {% include "client/layout/language.html" %} {% include "client/layout/instructor.html" %} {% include "client/layout/footer.html" %}
     </div>
@@ -74,32 +101,14 @@
     <script src="{{ url_for('static', filename='client/plugins/easing/easing.js') }}"></script>
     <script src="{{ url_for('static', filename='client/js/custom.js') }}"></script>
     <script>
-      let currentWord = '';
+      function speak(text) {
+        if (!('speechSynthesis' in window)) {
+          alert('Trình duyệt không hỗ trợ phát âm');
+          return;
+        }
 
-      function searchWord() {
-        const word = document.getElementById('searchWord').value.trim();
-        if (!word) return;
-
-        fetch(`/api/dictionary?word=${word}`)
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.error) {
-              alert('Không tìm thấy từ!');
-              return;
-            }
-
-            currentWord = data.word;
-            document.getElementById('result').classList.remove('d-none');
-            document.getElementById('resultWord').innerText = data.word;
-            document.getElementById('resultPhonetic').innerText = data.phonetic;
-            document.getElementById('resultMeaning').innerText = data.meaning;
-          });
-      }
-
-      function speakResult() {
-        const utterance = new SpeechSynthesisUtterance(currentWord);
-        utterance.lang = 'en-US';
-        speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US'; // Anh - Mỹ
         speechSynthesis.speak(utterance);
       }
     </script>

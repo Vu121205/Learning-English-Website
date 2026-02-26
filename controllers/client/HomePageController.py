@@ -1,5 +1,6 @@
 from flask import Blueprint, Flask, app, jsonify, render_template, request
 
+from models.topic import Topic
 from models.vocabulary import Vocabulary
 
 homePage_bp = Blueprint('homePage', __name__)
@@ -7,6 +8,17 @@ homePage_bp = Blueprint('homePage', __name__)
 @homePage_bp.route('/')
 def home():
     return render_template('client/homepage/show.html')
+
+@homePage_bp.route('/topic/<int:id>')
+def vocabularyByTopic(id):
+    topic = Topic.query.get_or_404(id)
+    vocabularies = Vocabulary.query.filter_by(topic_id=id).all()
+
+    return render_template(
+        'client/vocabulary/show.html',
+        topic=topic,
+        vocabularies=vocabularies
+    )
 
 @homePage_bp.route("/api/dictionary")
 def dictionary_api():

@@ -2,15 +2,15 @@
 
 <main>
   <div class="container-fluid px-4">
-    <h1 class="mt-4">Manage Vocabulary</h1>
+    <h1 class="mt-4">Manage Topic</h1>
     <ol class="breadcrumb mb-4">
       <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-      <li class="breadcrumb-item active">Vocabulary</li>
+      <li class="breadcrumb-item active">Update Topic</li>
     </ol>
     <div class="mt-5">
       <div class="row">
         <div class="col-md-6 col-12 mx-auto">
-          <h3>Update a vocabulary</h3>
+          <h3>Update a topic</h3>
           <hr />
           <form method="post" action="{{ url_for('topic.updateTopic', id=topic.id) }}" enctype="multipart/form-data">
             <div class="row">

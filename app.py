@@ -6,7 +6,6 @@ from controllers.admin.TopicController import topic_bp
 from models import db
 import models
 
-
 app = Flask(__name__)
 app.register_blueprint(dashBoard_bp)
 app.register_blueprint(vocabulary_bp)

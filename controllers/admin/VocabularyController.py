@@ -44,10 +44,15 @@ def updateVocabulary(id):
         vocab.phonetic = request.form.get("phonetic")
         vocab.word_type = request.form.get("word_type")
 
+        # Lấy topic_id từ form
+        topic_id = request.form.get("topic_id")
+        vocab.topic_id = int(topic_id) if topic_id else None
+
         db.session.commit()
         return redirect(url_for("vocabulary.getVocabularyPage"))
+    topics = Topic.query.all()
 
-    return render_template("admin/vocabulary/update.html", vocab=vocab)
+    return render_template("admin/vocabulary/update.html", vocab=vocab, topics=topics)
 
 
 @vocabulary_bp.route("/admin/vocabulary/delete/<int:id>", methods=["GET","POST"])

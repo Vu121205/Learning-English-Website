@@ -52,23 +52,6 @@ def fetch_dictionary_data(word):
     except:
         return None
 
-def translate_text(text, source, target):
-    url = "https://translate.argosopentech.com/translate"
-
-    try:
-        response = requests.post(url, json={
-            "q": text,
-            "source": source,
-            "target": target,
-            "format": "text"
-        }, timeout=5)
-
-        if response.status_code != 200:
-            return None
-
-        return response.json().get("translatedText")
-    except:
-        return None
 
 def translate_to_vi(text):
     url = "https://api.mymemory.translated.net/get"
